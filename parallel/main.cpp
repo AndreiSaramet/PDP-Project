@@ -363,7 +363,7 @@ int main() {
     auto endTIme = std::chrono::high_resolution_clock::now();
 
     beginTime = std::chrono::high_resolution_clock::now();
-//    std::cout << g.greedyColoring().second << "\n";
+    std::cout << g.greedyColoring().second << "\n";
     endTIme = std::chrono::high_resolution_clock::now();
     std::cout << "run in: " +
                  std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(endTIme - beginTime).count()) +
