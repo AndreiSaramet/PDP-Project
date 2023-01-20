@@ -22,9 +22,19 @@ public:
 
     std::pair<const std::vector<int>, const int> randomGraphColoring() const;
 
-    std::pair<const std::vector<int>, const int> welshPowellColoring() const;
+    std::pair<const std::vector<int>, const int> welshPowellColoring(
+            const std::function<void(std::vector<int> &, const std::function<bool(const int &, const int &)> &)> &sort =
+            [](std::vector<int> &vertices,
+               const std::function<bool(const int &, const int &)> &comparator) -> void {
+                std::sort(vertices.begin(), vertices.end(), comparator);
+            }) const;
 
-    std::pair<const std::vector<int>, const int> optimizedPowellColoring() const;
+    std::pair<const std::vector<int>, const int> optimizedPowellColoring(
+            const std::function<void(std::vector<int> &, const std::function<bool(const int &, const int &)> &)> &sort =
+            [](std::vector<int> &vertices,
+               const std::function<bool(const int &, const int &)> &comparator) -> void {
+                std::sort(vertices.begin(), vertices.end(), comparator);
+            }) const;
 
     std::vector<int> find_neighbours(const int &u) const;
 

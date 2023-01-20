@@ -62,14 +62,16 @@ std::pair<const std::vector<int>, const int> Graph::randomGraphColoring() const 
 }
 
 
-std::pair<const std::vector<int>, const int> Graph::welshPowellColoring() const {
+std::pair<const std::vector<int>, const int> Graph::welshPowellColoring(
+        const std::function<void(std::vector<int> &, const std::function<bool(const int &, const int &)> &)> &sort
+) const {
     std::vector<int> vertices{};
     std::vector<int> colours{};
     colours.assign(this->v, -1);
     for (int i = 0; i < this->v; ++i) {
         vertices.push_back(i);
     }
-    sort(vertices);
+    sort(vertices, [this](const int &v1, const int &v2) -> bool { return this->compareValenceDesc(v1, v2); });
 
     int k = 0;
     while (true) {
@@ -89,16 +91,17 @@ std::pair<const std::vector<int>, const int> Graph::welshPowellColoring() const 
     return std::pair<std::vector<int>, int>{colours, k};
 }
 
-std::pair<const std::vector<int>, const int> Graph::optimizedPowellColoring() const {
+std::pair<const std::vector<int>, const int> Graph::optimizedPowellColoring(
+        const std::function<void(std::vector<int> &, const std::function<bool(const int &, const int &)> &)> &sort
+) const {
     std::vector<int> vertices{};
     std::vector<int> colours{};
     colours.assign(this->v, -1);
     for (int i = 0; i < this->v; ++i) {
         vertices.push_back(i);
     }
-    sort(vertices);
+    sort(vertices, [this](const int &v1, const int &v2) -> bool { return this->compareValenceDesc(v1, v2); });
     std::list<int> sortedVertices{vertices.cbegin(), vertices.cend()};
-//    std::cout<<sortedVertices.size() << " -> ";
     int k = 0;
     while (true) {
         std::set<int> kColoured{};
@@ -117,7 +120,6 @@ std::pair<const std::vector<int>, const int> Graph::optimizedPowellColoring() co
             return kColoured.find(vertex) != kColoured.end();
         });
         sortedVertices.resize(std::distance(sortedVertices.begin(), it));
-//        std::cout<<sortedVertices.size() <<" -> ";
     }
     return std::pair<std::vector<int>, int>{colours, k};
 }
