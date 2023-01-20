@@ -78,10 +78,9 @@ std::pair<const std::vector<int>, const int> Graph::randomGraphColoring() const 
     return std::pair<const std::vector<int>, const int>{result, *std::max_element(result.cbegin(), result.cend())};
 }
 
-std::pair<const std::vector<int>, const int> Graph::welshPowellColoring(const std::function<void(std::vector<int> &,
-                                                                                                 const std::function<bool(
-                                                                                                         const int &,
-                                                                                                         const int &)> &)> &sort) const {
+std::pair<const std::vector<int>, const int> Graph::welshPowellColoring(
+        const std::function<void(std::vector<int> &, const std::function<bool(const int &, const int &)> &)> &sort
+) const {
     std::vector<int> vertices{};
     std::vector<int> colours{};
     colours.assign(this->v, -1);
