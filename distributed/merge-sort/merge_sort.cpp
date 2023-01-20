@@ -17,14 +17,12 @@ void halve(const std::vector<int> &source,
     std::copy(source.cbegin() + middle, source.cend(), std::back_inserter(secondHalf));
 }
 
-void merge_rec(
-        const std::vector<int>::const_iterator &v1_begin,
-        const std::vector<int>::const_iterator &v1_end,
-        const std::vector<int>::const_iterator &v2_begin,
-        const std::vector<int>::const_iterator &v2_end,
-        std::vector<int> &result,
-        const std::function<bool(const int &, const int &)> &comparator
-) {
+void merge_rec(const std::vector<int>::const_iterator &v1_begin,
+               const std::vector<int>::const_iterator &v1_end,
+               const std::vector<int>::const_iterator &v2_begin,
+               const std::vector<int>::const_iterator &v2_end,
+               std::vector<int> &result,
+               const std::function<bool(const int &, const int &)> &comparator) {
     if (v1_end - v1_begin <= 1 || v2_end - v2_begin <= 1) {
         std::merge(v1_begin, v1_end, v2_begin, v2_end, std::back_inserter(result), comparator);
         return;
