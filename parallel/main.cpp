@@ -1,5 +1,6 @@
 #include <iostream>
 #include "graph/Graph.h"
+#include "merge-sort/merge_sort.h"
 
 
 int main() {
@@ -16,10 +17,22 @@ int main() {
 //        std::cout << "Vertex " << u << " ---> Color "
 //                  << result[u] << std::endl;
 //    std::cout << "\n";
+    int threadsNo{}, vertexNo, edgeNo{};
+    std::cout << "threads no = ";
+    std::cin >> threadsNo;
+    std::cout << "vertex no = ";
+    std::cin >> vertexNo;
+    std::cout << "edge no (<= " + std::to_string(vertexNo * (vertexNo - 1) / 2) + ") = ";
+    std::cin >> edgeNo;
+
+    const std::function<void(std::vector<int> &, const std::function<bool(const int &, const int &)> &)> sort = [=](
+            std::vector<int> &vertices, const std::function<bool(const int &, const int &)> &comparator) -> void {
+        merge_sort(threadsNo, vertices, comparator);
+    };
 
     auto beginTime = std::chrono::high_resolution_clock::now();
     auto endTIme = std::chrono::high_resolution_clock::now();
-    Graph g = generateGraph(1000, 7000 + 5000 + 5000);
+    Graph g = generateGraph(vertexNo, edgeNo);
     beginTime = std::chrono::high_resolution_clock::now();
     std::cout << g.welshPowellColoring().second << "\n";
     endTIme = std::chrono::high_resolution_clock::now();
